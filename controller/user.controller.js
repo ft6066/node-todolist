@@ -42,4 +42,19 @@ userController.loginWithEmail = async (req, res) => {
   }
 };
 
+userController.getUser = async (req, res) => {
+  try {
+    const { userId } = req; //req.userId
+    const user = await User.findById(userId);
+    if (!user) {
+      throw new Error("유저를 찾을 수 없습니다.");
+    }
+    res.status(200).json({ status: "성공", user });
+  } catch (error) {
+    res.status(400).json({ status: "실패", message: error.message });
+  }
+};
+
 module.exports = userController;
+
+// 미들웨어

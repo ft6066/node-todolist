@@ -10,12 +10,12 @@ authController.authenticate = (req, res, next) => {
       throw new Error("invalid token");
     }
     const token = tokenString.replace("Bearer ", "");
-    jwt.verify(token, JWT_SECRET_KEY, (error, payload) => {
-      if (error) {
-        throw new Error("invalid token");
-      }
-      req.userId = payload._id;
-    });
+    // jwt.verify(token, JWT_SECRET_KEY, (error, payload) => {
+    //   if (error) {
+    //     throw new Error("invalid token");
+    //   }
+    jwt.verify(token, JWT_SECRET_KEY);
+    req.userId = payload._id;
     next();
   } catch (err) {
     res.status(400).json({ status: "fail", message: err.message });

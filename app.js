@@ -35,7 +35,14 @@ const app = express();
 const MONGODB_URI_PROD = process.env.MONGODB_URI_PROD;
 console.log("mongouri", MONGODB_URI_PROD);
 
-app.use(cors());
+app.use(
+  cors({
+    origin: ["http://localhost:6500", "https://todolist-demo2.netlify.app"], // 허용할 프론트 주소들
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"], // ❗ Authorization 명시
+    credentials: true,
+  })
+);
 app.use(bodyParser.json());
 app.use("/api", indexRouter);
 
